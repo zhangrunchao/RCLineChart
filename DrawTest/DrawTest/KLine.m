@@ -28,25 +28,25 @@
 -(void)drawRect:(CGRect)rect{
     
     
-    // 获取绘图上下文
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    if (self.isK) {
-        // 画k线
-        for (NSArray *item in self.points) {
-            // 转换坐标
-            CGPoint heightPoint,lowPoint,openPoint,closePoint;
-            heightPoint = CGPointFromString([item objectAtIndex:0]);
-            lowPoint = CGPointFromString([item objectAtIndex:1]);
-            openPoint = CGPointFromString([item objectAtIndex:2]);
-            closePoint = CGPointFromString([item objectAtIndex:3]);
-            [self drawKWithContext:context height:heightPoint Low:lowPoint open:openPoint close:closePoint width:self.lineWidth];
-        }
-        
-    }else{
-        // 画连接线
-        [self drawLineWithContext:context];
-    }
+//    // 获取绘图上下文
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    
+//    if (self.isK) {
+//        // 画k线
+//        for (NSArray *item in self.points) {
+//            // 转换坐标
+//            CGPoint heightPoint,lowPoint,openPoint,closePoint;
+//            heightPoint = CGPointFromString([item objectAtIndex:0]);
+//            lowPoint = CGPointFromString([item objectAtIndex:1]);
+//            openPoint = CGPointFromString([item objectAtIndex:2]);
+//            closePoint = CGPointFromString([item objectAtIndex:3]);
+//            [self drawKWithContext:context height:heightPoint Low:lowPoint open:openPoint close:closePoint width:self.lineWidth];
+//        }
+//        
+//    }else{
+//        // 画连接线
+//        [self drawLineWithContext:context];
+//    }
     
     
     
