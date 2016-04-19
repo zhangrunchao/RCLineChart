@@ -9,5 +9,5 @@
 #import "KModel.h"
 
 @implementation KModel
-
+@synthesize open,close,date,high,low,salesVolume,ma5,ma10,ma20;
 @end

@@ -78,8 +78,9 @@
         self.xyTextColor = [UIColor lightGrayColor];
         self.dataLineColor = [UIColor lightGrayColor];
         self.isNeedGrid = needGrid;
-        
+        //总缩放等级
         _scaleLevel = 1;
+        //本次缩放等级
         _curScaleLevel = 1;
         
         [self refreshConfig];
@@ -153,17 +154,18 @@
             //如果x值小于左边距 则忽略
             continue;
         }
+        
+        //显示横坐标标签   即如 xLabelShowCount = 5  dataSource有30个点，则显示 0 ，6，12，18，24，30
         if ( i % (int)(self.dataSource.count / self.xLabelShowCount) == 0  || i == self.dataSource.count - 1) {
             CGRect cubeRect = CGRectMake(MARGIN_LEFT + ((2 * i + 1) / 2.0 * self.xPerStepWidth+self.xContentScroll) * _scaleLevel * _curScaleLevel, self.height - MARGIN_BOTTOM, self.xPerStepWidth * _scaleLevel * _curScaleLevel, MARGIN_BOTTOM);
             [model.valueX drawInRect:cubeRect withAttributes:attribute];
         }
        
         
-        
+        //是否需要画网格
         if (self.isNeedGrid) {
             CGContextMoveToPoint(ctx,x , self.height - MARGIN_BOTTOM);
             CGContextSetRGBStrokeColor(ctx, .2f, .2f, .2f, .6);
-            
             CGContextAddLineToPoint(ctx, x, 0);
             
         }
@@ -196,22 +198,29 @@
     
     //画点
     for ( int i = 0; i<[self.dataSource count]; i++) {
+        //取出model
         RCLineChartModel *model = [self.dataSource objectAtIndex:i];
+        //获取y值 处理多维数组  x:2016-04-19  Y:15,25,35
         NSArray *valuesArray    = model.valuesY;
-        
+    
         for (int j = 0 ; j < valuesArray.count; j++) {
+            //如果第一次循环  生成字典
             if (i == 0 ) {
                 NSMutableDictionary *dic = [[NSMutableDictionary alloc]  initWithCapacity:1];
                 [pointArray addObject:dic];
             }
-            
+            //依次取出model中第j个值
             double           d      = [[valuesArray objectAtIndex:j] doubleValue];
+            //计算当前值得x坐标
             float            x      = MARGIN_LEFT + ((i + 1) * self.xPerStepWidth  + self.xContentScroll) * _curScaleLevel * _scaleLevel;
             
+            //判断x坐标是否小于左边距
             if (x < MARGIN_LEFT ) {
+                //如果x坐标小于左边距 判断model的索引  如果是最后一个Model则break;
                 if (i == self.dataSource.count - 1) {
                     break;
                 }else{
+                    //如果model不是最后一个 则记录临时点 即 i --> 索引   d-->数值  并循环下一次
                     //记录临时点
                     NSMutableDictionary *dic = [pointArray objectAtIndex:j];
                     [dic setObject:[NSNumber numberWithInt:i] forKey:@"i"];
@@ -219,6 +228,8 @@
                     continue;
                 }
             }else {
+                //x坐标大于左边距
+                //计算y坐标
                 CGFloat          y      = self.height - MARGIN_BOTTOM -  (d / (self.distanceY*_curScaleLevel *_scaleLevel)) * self.yPerStepHeight;
                 
                 CGPoint startPoint ;
@@ -226,40 +237,47 @@
 
                 
                 if ( i == 0) {
-                    //绘制第一个点前 先将画笔移动到原点到第一个点直线 与 Y轴的交点
+                    //绘制第一个点前 先将画笔移动到原点到第一个点直线 与 Y轴的交点 则记录临时点 即 i --> 索引   d-->数值  并循环下一次
                     NSMutableDictionary *dic = [pointArray objectAtIndex:j];
                     [dic setObject:[NSNumber numberWithInt:i] forKey:@"i"];
                     [dic setObject:[NSNumber numberWithDouble:d] forKey:@"d"];
                     
+                    //计算开始点坐标和结束点坐标
                     startPoint = CGPointMake(MARGIN_LEFT,  [self pointByLineAndYAxixFromPointA:CGPointMake(MARGIN_LEFT+_xContentScroll  *_curScaleLevel *_scaleLevel                                                                                                                                                                                                   , self.height - MARGIN_BOTTOM) pointB:CGPointMake(x, y) resultX:MARGIN_LEFT]);
                     endPoint   = CGPointMake(x, y);
                     
+                    //画线和点
                     [RCLineChartCommon drawLine:ctx startPoint:startPoint endPoint:endPoint lineColor:[UIColor colorWithRed:.6f green:.4f blue:.5f alpha:1]];
                     
                     [RCLineChartCommon drawPoint:ctx point:CGPointMake(x, y ) color:[UIColor colorWithRed:.3f green:.6f blue:.9f alpha:1]];
                 
                 }else{
+                    //如果不是第一个 则取出上一个临时点
                     NSMutableDictionary *dic =[pointArray objectAtIndex:j];
                     NSInteger ki = [[dic objectForKey:@"i"] integerValue];
                     double    kd = [[dic objectForKey:@"d"] doubleValue];
                     
+                    //计算上一个临时点的x坐标及y坐标
                     CGFloat lastY =self.height - MARGIN_BOTTOM -  (kd / (self.distanceY*    _curScaleLevel *_scaleLevel)) * self.yPerStepHeight;
                     CGFloat lastX =MARGIN_LEFT + ((ki+1) * self.xPerStepWidth+_xContentScroll ) * _curScaleLevel * _scaleLevel;
                     
-                    
+                    //判断上一个坐标x点是否小于左边
                     if (lastX < MARGIN_LEFT) {
+                        //计算上一个点与当前点的直线  和 左边的焦点
                         startPoint = CGPointMake(MARGIN_LEFT,  [self pointByLineAndYAxixFromPointA:CGPointMake(lastX,lastY) pointB:CGPointMake(x, y) resultX:MARGIN_LEFT]);
                         endPoint   = CGPointMake(x, y);
+                        //连接两点
                         [RCLineChartCommon drawLine:ctx startPoint:startPoint endPoint:endPoint lineColor:[UIColor colorWithRed:.6f green:.4f blue:.5f alpha:1]];
                     }else{
+                        //连接上一点和当前点
                         startPoint = CGPointMake(lastX,lastY);
                         endPoint   = CGPointMake(x, y);
                         [RCLineChartCommon drawLine:ctx startPoint: startPoint endPoint: endPoint lineColor:[UIColor colorWithRed:.6f green:.4f blue:.5f alpha:1]];
                     }
 
-                    
+                    //画线
                     [RCLineChartCommon drawPoint:ctx point:CGPointMake(MARGIN_LEFT + ((i + 1) * self.xPerStepWidth + self.xContentScroll) *_curScaleLevel *_scaleLevel, y ) color:[UIColor colorWithRed:.3f green:.6f blue:.9f alpha:1]];
-                    
+                    //记录临时点
                     [dic setObject:[NSNumber numberWithInt:i] forKey:@"i"];
                     [dic setObject:[NSNumber numberWithDouble:d] forKey:@"d"];
                     
@@ -276,6 +294,9 @@
                 [path addLineToPoint:endPoint];
                 [path addLineToPoint:CGPointMake(endPoint.x , self.height - MARGIN_BOTTOM)];
                 [path closePath];//第五条线通过调用closePath方法得到的
+                
+                
+                //画渐变
                 UIColor *lineStartColor =[UIColor colorWithRed:j*0.88+0.1 green:(j+1)*0.13+0.04 blue:(j+3)*0.96+0.1 alpha:.4];
                 UIColor *lineEndColor =[UIColor colorWithRed:j*0.88+0.1 green:(j+1)*0.13+0.04 blue:(j+3)*0.96+0.1 alpha:.2];
 
@@ -298,24 +319,19 @@
 */
 
 -(void)zoomByPoint:(CGPoint)point scale:(CGFloat)scale{
-    
-    NSLog(@"distance x == %f  center == %f",point.x,(self.width - MARGIN_LEFT)/2);
-    
-    
-    
-    
-    
-    
-    
+    //如果宽间距 * 当前缩放等级 *本次缩放等级 小于35 或者 大于 150  不允许缩放
     if (self.xPerStepWidth * _scaleLevel * scale < 35 || self.xPerStepWidth * _scaleLevel * scale > 150) {
         return;
     }
     CGFloat dis = 0.0f;
+    //最后放大点
     if( _lastScalePoint.x){
+        //判断两点是否相同  如果相同不做处理  如果不同 计算距离，并平移
         if (point.x != _lastScalePoint.x) {
             dis = point.x - _lastScalePoint.x;
         }
     }else{
+        //计算距离并平移
         dis =point.x - (self.width - MARGIN_LEFT)/2;
     }
     
@@ -325,8 +341,9 @@
         _xContentScroll -= dis;
         
     }
- 
+    //记录上次放大点
     _lastScalePoint = point;
+    //记录本次放大等级
     _curScaleLevel = scale;
     
     [self setNeedsDisplay];
@@ -334,10 +351,13 @@
 
 
 -(void)stopZoom{
+    //用户停止缩放  当缩放距离小于35 或者 大于150时  禁止缩放
     if (self.xPerStepWidth * _scaleLevel * _curScaleLevel < 35 || self.xPerStepWidth * _scaleLevel * _curScaleLevel > 150) {
         return;
     }
+    //缩放等级 = 缩放等级 * 当前缩放等级
     _scaleLevel     = _scaleLevel * _curScaleLevel;
+    //当前缩放等级置 1
     _curScaleLevel  = 1;
     [self setNeedsDisplay];
 
@@ -400,17 +420,20 @@
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    
     CGPoint touchLocation       = [[touches anyObject] locationInView:self];
     CGPoint prevouseLocation    = [[touches anyObject] previousLocationInView:self];
+    //本次平移和上次平移的距离
     float   xDiffrance          = touchLocation.x-prevouseLocation.x;
-
+    //移动累加
     _xContentScroll            += xDiffrance;
-    
+    //当移动大于0时  则修改为0 即起始点
     if (_xContentScroll > 0) {
         _xContentScroll = 0;
     }
-    
+    //当向左滑动移动值为负数  移动值大于（总数量-1） * 每点间隔 即 总宽度
     if (-_xContentScroll > (self.xPerStepWidth * (self.totalXCount -1)  )) {
+        //设置移动值为 最右值
         _xContentScroll  = -(self.xPerStepWidth * (self.totalXCount-1 ));
     }
     

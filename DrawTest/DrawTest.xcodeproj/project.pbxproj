@@ -8,8 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		331649CD1CAA4FAE005D2A45 /* KModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 331649CC1CAA4FAE005D2A45 /* KModel.m */; };
+		3340954B1CAE1D56003AA7FD /* KDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3340954A1CAE1D56003AA7FD /* KDataModel.m */; };
 		339D36151CA8FF7F00E6B2E4 /* RCLineChartCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 339D36141CA8FF7F00E6B2E4 /* RCLineChartCommon.m */; };
 		33E30C7F1CACAE5E000D82CA /* KLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E30C7E1CACAE5E000D82CA /* KLine.m */; };
+		33E30C821CAD0762000D82CA /* KLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E30C811CAD0762000D82CA /* KLineView.m */; };
+		33E30C851CAD13FA000D82CA /* KColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E30C841CAD13FA000D82CA /* KColor.m */; };
+		33E30C881CAD169F000D82CA /* UIColor+helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 33E30C871CAD169F000D82CA /* UIColor+helper.m */; };
 		B55769011CA0D88400970AD3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B55769001CA0D88400970AD3 /* main.m */; };
 		B55769041CA0D88400970AD3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B55769031CA0D88400970AD3 /* AppDelegate.m */; };
 		B55769071CA0D88400970AD3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B55769061CA0D88400970AD3 /* ViewController.m */; };
@@ -108,10 +112,18 @@
 /* Begin PBXFileReference section */
 		331649CB1CAA4FAE005D2A45 /* KModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KModel.h; sourceTree = "<group>"; };
 		331649CC1CAA4FAE005D2A45 /* KModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KModel.m; sourceTree = "<group>"; };
+		334095491CAE1D56003AA7FD /* KDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDataModel.h; sourceTree = "<group>"; };
+		3340954A1CAE1D56003AA7FD /* KDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KDataModel.m; sourceTree = "<group>"; };
 		339D36131CA8FF7F00E6B2E4 /* RCLineChartCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCLineChartCommon.h; sourceTree = "<group>"; };
 		339D36141CA8FF7F00E6B2E4 /* RCLineChartCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCLineChartCommon.m; sourceTree = "<group>"; };
 		33E30C7D1CACAE5E000D82CA /* KLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLine.h; sourceTree = "<group>"; };
 		33E30C7E1CACAE5E000D82CA /* KLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KLine.m; sourceTree = "<group>"; };
+		33E30C801CAD0762000D82CA /* KLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KLineView.h; sourceTree = "<group>"; };
+		33E30C811CAD0762000D82CA /* KLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KLineView.m; sourceTree = "<group>"; };
+		33E30C831CAD13FA000D82CA /* KColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KColor.h; sourceTree = "<group>"; };
+		33E30C841CAD13FA000D82CA /* KColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KColor.m; sourceTree = "<group>"; };
+		33E30C861CAD169F000D82CA /* UIColor+helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+helper.h"; sourceTree = "<group>"; };
+		33E30C871CAD169F000D82CA /* UIColor+helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+helper.m"; sourceTree = "<group>"; };
 		B55768FC1CA0D88400970AD3 /* DrawTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B55769001CA0D88400970AD3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B55769021CA0D88400970AD3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -328,10 +340,18 @@
 		331649CA1CAA4B9E005D2A45 /* kline */ = {
 			isa = PBXGroup;
 			children = (
+				33E30C861CAD169F000D82CA /* UIColor+helper.h */,
+				33E30C871CAD169F000D82CA /* UIColor+helper.m */,
 				331649CB1CAA4FAE005D2A45 /* KModel.h */,
 				331649CC1CAA4FAE005D2A45 /* KModel.m */,
 				33E30C7D1CACAE5E000D82CA /* KLine.h */,
 				33E30C7E1CACAE5E000D82CA /* KLine.m */,
+				33E30C801CAD0762000D82CA /* KLineView.h */,
+				33E30C811CAD0762000D82CA /* KLineView.m */,
+				33E30C831CAD13FA000D82CA /* KColor.h */,
+				33E30C841CAD13FA000D82CA /* KColor.m */,
+				334095491CAE1D56003AA7FD /* KDataModel.h */,
+				3340954A1CAE1D56003AA7FD /* KDataModel.m */,
 			);
 			name = kline;
 			sourceTree = "<group>";
@@ -846,10 +866,12 @@
 				B5576CD71CA0E30700970AD3 /* HexColors.m in Sources */,
 				B5576BE61CA0E0BB00970AD3 /* SDWebImageCompat.m in Sources */,
 				B5576C9F1CA0E1CF00970AD3 /* POPCustomAnimation.mm in Sources */,
+				33E30C821CAD0762000D82CA /* KLineView.m in Sources */,
 				B5576C0B1CA0E17500970AD3 /* CGContextObjectConfig+Useful.m in Sources */,
 				B5576C9D1CA0E1CF00970AD3 /* POPBasicAnimation.mm in Sources */,
 				B5576BF21CA0E0BB00970AD3 /* UIView+WebCacheOperation.m in Sources */,
 				B5576CA61CA0E1CF00970AD3 /* POPVector.mm in Sources */,
+				33E30C881CAD169F000D82CA /* UIColor+helper.m in Sources */,
 				B5576D561CA0E4E200970AD3 /* UIView+AnimationPracticalMethod.m in Sources */,
 				B5576C1F1CA0E19800970AD3 /* GCDTimer.m in Sources */,
 				B5576C1C1CA0E19800970AD3 /* GCDGroup.m in Sources */,
@@ -873,6 +895,7 @@
 				B5576C9C1CA0E1CF00970AD3 /* POPAnimator.mm in Sources */,
 				B5576BEC1CA0E0BB00970AD3 /* UIButton+WebCache.m in Sources */,
 				B5FE77E11CA120E900F9DA6B /* UIView+SetRect.m in Sources */,
+				3340954B1CAE1D56003AA7FD /* KDataModel.m in Sources */,
 				B5576CA11CA0E1CF00970AD3 /* POPGeometry.mm in Sources */,
 				B5576BEB1CA0E0BB00970AD3 /* SDWebImagePrefetcher.m in Sources */,
 				B5576CD81CA0E30700970AD3 /* NSString+HexColors.m in Sources */,
@@ -908,6 +931,7 @@
 				B5576C0A1CA0E17500970AD3 /* CGContextObjectConfig.m in Sources */,
 				B5576C9E1CA0E1CF00970AD3 /* POPCGUtils.mm in Sources */,
 				33E30C7F1CACAE5E000D82CA /* KLine.m in Sources */,
+				33E30C851CAD13FA000D82CA /* KColor.m in Sources */,
 				B5576BE31CA0E0BB00970AD3 /* MKAnnotationView+WebCache.m in Sources */,
 				B5576CA31CA0E1CF00970AD3 /* POPMath.mm in Sources */,
 				B5576C1E1CA0E19800970AD3 /* GCDSemaphore.m in Sources */,

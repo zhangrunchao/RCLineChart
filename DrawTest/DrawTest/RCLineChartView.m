@@ -95,7 +95,9 @@
 
     if([(UIPinchGestureRecognizer*)pinch state] == UIGestureRecognizerStateEnded)
     {
+        //缩放结束  设置当前缩放为1
         _lastScale = 1;
+        //设置contentView的缩放等级
         [self.contentView stopZoom];
         
         return;
@@ -105,10 +107,12 @@
     if([(UIPinchGestureRecognizer*)pinch state] == UIGestureRecognizerStateChanged)
     {
         if ([pinch numberOfTouches] >= 2) {
+            //两个手指缩放  获取两个点，计算中心
             CGPoint c = [pinch locationOfTouch:0 inView:_contentView];
             CGPoint d = [pinch locationOfTouch:1 inView:_contentView];
-            
+            //得到中心点
             CGPoint center = [RCLineChartCommon centerPointByPointA:c pointB:d];
+            //放大等级超过0.2通知contentView更新
             if ([pinch scale] - _lastScale > 0.2 ||  [pinch scale] - _lastScale < 0.2) {
                 [self.contentView zoomByPoint:center scale:[pinch scale]];
                 _lastScale = [pinch scale];
